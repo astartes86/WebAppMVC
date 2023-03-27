@@ -16,24 +16,42 @@ namespace WebApplicationMVC.Controllers
         public IActionResult Index()
         {
             //ViewBag.People = new List<string> { "Tom", "Sam", "Bob" };
-            var people = new List<string> { "Tom", "Sam", "Bob" };
-            var client = new Client { Id = 222, Name = "vladimir"
-        };//создаем клиента
+            //var people = new List<string> { "Tom", "Sam", "Bob" };
+            var client = new Client { Id = 222, Name = "vladimir" };//создаем клиента
             return View(client);
         }
         //[HttpPost]
         //public string Index(string username) => $"User Name: {username}";
+        //[HttpPost]
+        //public string Index(int summ, int time, int procent, string comment)
+        //{
+        //    return $"Summ: {summ}   time: {time}   procent: {procent}  Comment: {comment}";
+        //}
+
+        //[HttpPost]
+        //public IActionResult Client(Client client)
+        //public IActionResult Client()
+        //{
+        //string authData = $"Имя: {client.Name}   Сумма: {client.Summa}   Срок: {client.Long}  Процент: {client.Procent}";
+        //return Content($"{authData}");
+        //return View();
+        //}
+        //[HttpPost]
+        //public IActionResult Client(int Summa, int Long, int Procent, string Name)
+        //public IActionResult Client(string Name)
+        //{
+            //string authData = $"Имя: {Name}   Сумма: {Summa}   Срок: {Long}  Процент: {Procent}";
+            //return Content($"{Name}");
+        //}
+
+        [HttpGet]
+        public IActionResult Client() => View();
         [HttpPost]
-        public string Index(string username, string password, int age, string comment)
-        {
-            return $"User Name: {username}   Password: {password}   Age: {age}  Comment: {comment}";
-        }
-        [HttpPost]
-        public IActionResult Client(string login, string password, int age, string comment)
-        {
-            string authData = $"Login: {login}   Password: {password}   Age: {age}  Comment: {comment}";
-            return Content(authData);
-        }
+        public string Client(int Summa, int Long, int Procent, string Name) => $"Имя: {Name}   Сумма: {Summa}   Срок: {Long}  Процент: {Procent}";
+
+        //public IActionResult Client()
+        //{ ViewBag.Message = "asdfsdf";
+        //        return View();}
         public IActionResult Privacy()
         {
             return View();
