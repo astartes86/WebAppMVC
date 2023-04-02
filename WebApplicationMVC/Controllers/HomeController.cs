@@ -17,8 +17,8 @@ namespace WebApplicationMVC.Controllers
         {
             //ViewBag.People = new List<string> { "Tom", "Sam", "Bob" };
             //var people = new List<string> { "Tom", "Sam", "Bob" };
-            var client = new Client { Id = 222, Name = "vladimir" };//создаем клиента
-            return View(client);
+            //var client = new Client { Id = 222, Name = "vladimir" };//создаем клиента
+            return View();
         }
         //[HttpPost]
         //public string Index(string username) => $"User Name: {username}";
@@ -47,8 +47,11 @@ namespace WebApplicationMVC.Controllers
         [HttpGet]
         public IActionResult Client() => View();
         [HttpPost]
-        public string Client(int Summa, int Long, int Procent, string Name) => $"Имя: {Name}   Сумма: {Summa}   Срок: {Long}  Процент: {Procent}";
-
+        public IActionResult Client(Client client)
+        {
+            Client cli = new Client { Name = client.Name, Summa = client.Summa };
+            return View(cli);
+        }
         //public IActionResult Client()
         //{ ViewBag.Message = "asdfsdf";
         //        return View();}
@@ -63,4 +66,5 @@ namespace WebApplicationMVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
+    //public record class Client(string Name);
 }

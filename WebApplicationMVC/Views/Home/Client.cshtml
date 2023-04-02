@@ -1,8 +1,10 @@
-﻿<h2>Ввод данных</h2>
+﻿  @model Client
+
+<h2>Ввод данных</h2>
 <form method="post">
     <p>
         <label>Сумма займа:</label><br />
-        <input type="number" name="Summa" />
+        <input type="number" name="Summa" value="@Model.Summa"/>
     </p>
     <p>
         <label>Срок займа:</label><br />
