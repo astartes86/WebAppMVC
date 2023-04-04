@@ -10,9 +10,10 @@ namespace WebApplicationMVC.Models
         [Required]
         [Display(Name = "Название")]
         public string Name { get; set; }
-        public int Summa { get; set; }
+        public float Summa { get; set; }
         public int Long { get; set; }
-        public int Procent { get; set; }
+        public float Procent { get; set; }
+        public float Platej { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public string Description { get; set; }
     }

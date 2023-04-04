@@ -20,36 +20,13 @@ namespace WebApplicationMVC.Controllers
             //var client = new Client { Id = 222, Name = "vladimir" };//создаем клиента
             return View();
         }
-        //[HttpPost]
-        //public string Index(string username) => $"User Name: {username}";
-        //[HttpPost]
-        //public string Index(int summ, int time, int procent, string comment)
-        //{
-        //    return $"Summ: {summ}   time: {time}   procent: {procent}  Comment: {comment}";
-        //}
-
-        //[HttpPost]
-        //public IActionResult Client(Client client)
-        //public IActionResult Client()
-        //{
-        //string authData = $"Имя: {client.Name}   Сумма: {client.Summa}   Срок: {client.Long}  Процент: {client.Procent}";
-        //return Content($"{authData}");
-        //return View();
-        //}
-        //[HttpPost]
-        //public IActionResult Client(int Summa, int Long, int Procent, string Name)
-        //public IActionResult Client(string Name)
-        //{
-            //string authData = $"Имя: {Name}   Сумма: {Summa}   Срок: {Long}  Процент: {Procent}";
-            //return Content($"{Name}");
-        //}
 
         [HttpGet]
         public IActionResult Client() => View();
         [HttpPost]
         public IActionResult Client(Client client)
         {
-            Client cli = new Client { Name = client.Name, Summa = client.Summa };
+            Client cli = new Client { Procent = client.Procent, Summa = client.Summa, Long = client.Long, Platej = client.Procent / 100 / 12 * client.Summa };
             return View(cli);
         }
         //public IActionResult Client()
