@@ -9,12 +9,18 @@ namespace WebApplicationMVC.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Название")]
-        public string Name { get; set; }
-        public float Summa { get; set; }
-        public int Long { get; set; }
-        public float Procent { get; set; }
-        public float Platej { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public string Description { get; set; }
+        public string Name { get; set; } = "asdf";
+        public double Summa { get; set; }
+        public double Long { get; set; } = 15;
+        public double Stavka { get; set; }
+        public double MainPayment { get; set; }
+        public double ProcentPayment { get; set; }
+        public double TotalPayment { get; set; }
+        public DateTime CreatedDate { get; set; } 
+        //public string Description { get; set; }
+    }
+    public class MyClients
+    {
+        public List<Client> Clients { get; set; } = new List<Client>();
     }
 }
