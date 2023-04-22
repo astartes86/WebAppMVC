@@ -1,24 +1,40 @@
-﻿
+﻿@model WebApplicationMVC.Models.Client
 
 <h2>Основной ввод данных</h2>
 <form method="post" action="/Home/Client">
+    <div class="col-md-2">
     <p>
-        <label>Сумма займа:</label><br />
-        <input type="number" name="Summa" value="10000"/>
+            <label asp-for="Summa"class="control-label">Ставка:</label><br />
+            <input type="number" asp-for="Summa" class="form-control" value="10000"/>
+            <span asp-validation-for="Summa" class="text-danger"></span>
     </p>
     <p>
-        <label>Срок займа в месяцах:</label><br />
-        <input type="number" name="Long" value="12"/>
+
+            <label asp-for="Long"class="control-label">На сколько месяцев займем?:</label><br />
+            <input type="number" asp-for="Long" class="form-control" value="12"/>@*value="12"/> теперь =15 потому что прописал при описании класса*@
+            <span asp-validation-for="Long" class="text-danger"></span>
     </p>
     <p>
-        <label>Ставка:</label><br />
-        <input type="number" name="Stavka" value="12"/> @* поменял в классе клиента имя - тут естественно не поменялось -мянять надо руками *@
+            <label asp-for="Stavka"class="control-label">По какой ставке?:</label><br />
+            <input type="number" asp-for="Stavka" class="form-control" value="12"/>
+            <span asp-validation-for="Stavka" class="text-danger"></span>
     </p>
     <p>
-        <label>Comment:</label><br />
-        <textarea name="Name"></textarea>
+        <div class="form-group">
+            <label asp-for="Name"class="control-label">Name</label><br />
+            <input type="text" asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
     </p>
     <p>
         <input type="submit" value="Send" />
     </p>
+    </div>
 </form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");//без этого не работает валидация 
+}
+}
+

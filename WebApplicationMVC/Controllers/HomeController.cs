@@ -15,18 +15,24 @@ namespace WebApplicationMVC.Controllers
 
         public IActionResult Index()
         {
+            //if (ModelState.IsValid)                           локалхост выполнил перенаправление множество раз вышло на страничке запуска
+            //{                                                 локалхост выполнил перенаправление множество раз вышло на страничке запуска
+            //    return RedirectToAction("Index", "Home");     локалхост выполнил перенаправление множество раз вышло на страничке запуска
+            //}                                                 локалхост выполнил перенаправление множество раз вышло на страничке запуска
+
+
             //ViewBag.People = new List<string> { "Tom", "Sam", "Bob" };
             //var people = new List<string> { "Tom", "Sam", "Bob" };
             //var client = new Client { Id = 222, Name = "vladimir" };//создаем клиента
             return View();
         }
-
         [HttpGet]
         public IActionResult Client() => View();
         [HttpPost]
         public IActionResult Client(Client client)//в индексе форма настрона на стр клиент. обрабатываем метод_
                                                    //пост отправляемый при нажатии на кнопку сабмит в стр клиент, он сам передается в параметр 
         {
+
             MyClients myclibase = new();
             //Client cli = new Client { Procent = client.Procent, Summa = client.Summa, Long = client.Long, Platej = client.Procent / 100 / 12 * client.Summa };
             double k = client.Stavka / 100 / 12 * Math.Pow(1 + client.Stavka / 100 / 12, client.Long);
@@ -56,10 +62,15 @@ namespace WebApplicationMVC.Controllers
             }
             return View(myclibase);
         }
-        //public IActionResult Client()
-        //{ ViewBag.Message = "asdfsdf";
-        //        return View();}
-        public IActionResult Privacy()
+        //public IActionResult Client2(Client client)//попробовал сгенерить форму по модели через клик в меню
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(client);
+        //    }
+        //    return RedirectToAction("Index", "Home"); 
+        //}
+            public IActionResult Privacy()
         {
             return View();
         }
@@ -69,7 +80,6 @@ namespace WebApplicationMVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
     }
 
     //public record class MyClient(string Name);
