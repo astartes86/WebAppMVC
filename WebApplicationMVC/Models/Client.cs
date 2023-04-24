@@ -7,8 +7,7 @@ namespace WebApplicationMVC.Models
     {
         //[HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Не указано имя")]
-        [Display(Name = "Название")]
+        //[Display(Name = "Название")]
         [StringLength(10, MinimumLength =5, ErrorMessage ="Длина строки менее 5")]
         public string Name { get; set; }
         [Required (ErrorMessage = "Надо указать сумму")]
