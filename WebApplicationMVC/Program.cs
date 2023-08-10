@@ -1,8 +1,16 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore;
+using WebApplicationMVC.Models;
 
+//var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder();
+// получаем строку подключения из файла конфигурации
+//string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+// добавляем контекст ApplicationContext в качестве сервиса в приложение
+builder.Services.AddDbContext<ApplicationContext>();//(options => options.UseNpgsql(connection));
 
+
+builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -15,11 +23,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
+//app.MapDefaultControllerRoute();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -1,21 +1,45 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApplicationMVC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplicationMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        ApplicationContext db;
+        public HomeController(ApplicationContext context)
         {
-            _logger = logger;
+            db = context;
         }
 
-        public IActionResult Index()
+        //private readonly ILogger<HomeController> _logger;
+
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        public async Task<IActionResult> Index()
+        {
+            return View(await db.Папки.ToListAsync());
+        }
+        public IActionResult Index2()
         {
                 return View();
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Папка папка)
+        {
+            db.Папки.Add(папка);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
