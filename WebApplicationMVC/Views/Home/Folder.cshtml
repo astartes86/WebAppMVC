@@ -1,0 +1,70 @@
+﻿
+ @model WebApplicationMVC.Models.СписокПапок
+
+@*
+@model WebApplicationMVC.Models.Папка
+
+<h2>Список пользователей</h2>
+<p><a asp-action="Create">Добавить папку</a></p>
+
+<table class="table">
+     <tr><th>Название</th><th>КодРодительскойПапки</th></tr>
+
+@if (Model.СПапки.Where(x => x.КодРодительскойПапки == Model.Seed).Any())
+
+{
+*@
+
+<ul id="tree">
+    @foreach (var item in Model.СПапки)
+    {
+            Console.WriteLine("отладка Seed=:"+Model.Seed);
+            @if (item.КодРодительскойПапки == Model.Seed)
+            {
+                WebApplicationMVC.Models.СписокПапок inner = new WebApplicationMVC.Models.СписокПапок 
+                { 
+                   Seed = item.КодПапки, 
+                   СПапки = Model.СПапки 
+                };
+            <li>
+                <span parent-id="@item.КодПапки">
+                        <a href="#"  onclick="expand(this)">@item.Название</a>
+                </span>
+                @Html.Partial("Folder", inner)
+            </li>
+            }
+    }
+</ul>
+  <script>
+    //var tree=document.getElementById('tree');
+
+    function expand(elem) 
+    {
+    var li = $(elem).parents('li')[0];
+    var ul = $(li).children('ul')[0];
+    $(ul).css('display') == 'none' ? $(ul).show() : $(ul).hide();
+    }
+
+    //  ловим клики на всём дереве
+    //tree.onclick = function(event) {
+
+    //  if (event.target.tagName != 'SPAN') {
+    //    return;
+    //  }
+
+    //  let childrenContainer = event.target.parentNode.querySelector('ul');
+    //  if (!childrenContainer) return; // нет детей
+
+    //  childrenContainer.hidden = !childrenContainer.hidden;
+    //}
+  </script>
+@*
+}
+
+        <tr>
+            <td>@item.Название</td>
+            <td>@item.КодРодительскойПапки</td>
+        </tr>
+    }
+</table>
+*@

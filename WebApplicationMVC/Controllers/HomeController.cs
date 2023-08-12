@@ -20,10 +20,23 @@ namespace WebApplicationMVC.Controllers
         //    _logger = logger;
         //}
 
+        public ActionResult Folder()
+        {
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                СписокПапок model = new СписокПапок()
+                {
+                    СПапки = context.Папки.ToArray().Select(x => { Console.WriteLine("index id=" + x.Название); return new ПапкаПохожая(x); })
+                };
+                return View(model);
+            }
+        }
+
         public async Task<IActionResult> Index()
         {
             return View(await db.Папки.ToListAsync());
         }
+        
         public IActionResult Index2()
         {
                 return View();

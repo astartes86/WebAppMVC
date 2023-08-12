@@ -1,9 +1,10 @@
-﻿@model IEnumerable<WebApplicationMVC.Models.Папка>
+﻿
+@model IEnumerable<WebApplicationMVC.Models.Папка>
  
-<h2>Список пользователей</h2>
-<p><a asp-action="Create">Добавить пользователя</a></p>
+<h2>Список папок</h2>
+<p><a asp-action="Create">Добавить папку</a></p>
 <table class="table">
-     <tr><th>Имя</th><th>Возраст</th></tr>
+     <tr><th>Название</th><th>КодРодительскойПапки</th></tr>
     @foreach (var item in Model)
     {
         <tr>
