@@ -12,6 +12,13 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+ @* можно сделать поиск айди по названию и коду родителя, но пока некогда
+*@
+            <div class="form-group">
+                <label asp-for="КодПапки" class="control-label"></label>
+                <input asp-for="КодПапки" class="form-control" />
+                <span asp-validation-for="КодПапки" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Название" class="control-label"></label>
                 <input asp-for="Название" class="form-control" />

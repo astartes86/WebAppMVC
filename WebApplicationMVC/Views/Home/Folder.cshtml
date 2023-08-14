@@ -18,7 +18,7 @@
 <ul id="tree">
     @foreach (var item in Model.СПапки)
     {
-            Console.WriteLine("отладка Seed=:"+Model.Seed);
+            //Console.WriteLine("отладка Seed=:"+Model.Seed);
             @if (item.КодРодительскойПапки == Model.Seed)
             {
                 WebApplicationMVC.Models.СписокПапок inner = new WebApplicationMVC.Models.СписокПапок 

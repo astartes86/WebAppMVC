@@ -1,0 +1,40 @@
+﻿@model WebApplicationMVC.Models.СписокОбъединенная
+
+
+<ul id="tree">
+    @foreach (var item in Model.CОбъединенная)
+    {
+        //Console.WriteLine("отладка Seed=:"+Model.Seed);
+        <li>
+            @if (item.ПапкаИзОбъединенной.КодРодительскойПапки == Model.Seed)
+            {
+                WebApplicationMVC.Models.СписокОбъединенная inner = new WebApplicationMVC.Models.СписокОбъединенная
+                    {
+                        Seed = item.ПапкаИзОбъединенной.КодПапки,
+                        CОбъединенная = Model.CОбъединенная
+                    };
+
+                <span parent-id="@item.ПапкаИзОбъединенной.КодПапки">
+                    <a href="#"  onclick="expand(this)">@item.ПапкаИзОбъединенной.Название</a>
+                </span>
+                @Html.Partial("FolderFile3", inner)
+            }
+            else
+            {
+                <span>@item.ФайлИзОбъединенной.Название</span>
+            }
+        </li>
+    }
+</ul>
+  <script>
+    //var tree=document.getElementById('tree');
+
+    function expand(elem) 
+    {
+    var li = $(elem).parents('li')[0];
+    var ul = $(li).children('ul')[0];
+    $(ul).css('display') == 'none' ? $(ul).show() : $(ul).hide();
+    }
+
+  </script>
+

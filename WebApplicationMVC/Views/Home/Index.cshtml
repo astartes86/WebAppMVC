@@ -4,10 +4,11 @@
 <h2>Список папок</h2>
 <p><a asp-action="Create">Добавить папку</a></p>
 <table class="table">
-     <tr><th>Название</th><th>КодРодительскойПапки</th></tr>
+     <tr><th>КодПапки</th><th>Название</th><th>КодРодительскойПапки</th></tr>
     @foreach (var item in Model)
     {
         <tr>
+            <td>@item.КодПапки</td>
             <td>@item.Название</td>
             <td>@item.КодРодительскойПапки</td>
         </tr>

@@ -1,0 +1,22 @@
+﻿@model Папка
+@{
+    ViewData["Title"] = "DeleteF";
+}
+
+<h1>DeleteF</h1>
+
+
+ 
+<h2>Введите параметры :</h2>
+<form method="post"> @*action="/Home/Client"> метод пост чтоб уверенно удалять*@
+    <div class="col-md-2">
+    <p>
+            <label asp-for="КодПапки"class="control-label">Ставка:</label><br />
+            <input type="number" asp-for="КодПапки" class="form-control" value="2"/>
+            <span asp-validation-for="КодПапки" class="text-danger"></span>
+    </p>
+    <p>
+        <input type="submit" value="Send" />
+    </p>
+    </div>
+</form>
