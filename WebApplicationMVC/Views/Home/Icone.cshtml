@@ -1,0 +1,16 @@
+﻿
+@model IEnumerable<WebApplicationMVC.Models.Расширение>
+ 
+
+
+    @foreach (var item in Model)
+    {
+            <style>.my_txt_icon {
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-image: url(@item.Иконка)}
+            
+            </style>
+
+    ;}

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using WebApplicationMVC.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System;
 
 namespace WebApplicationMVC.Controllers
 {
@@ -56,26 +57,29 @@ namespace WebApplicationMVC.Controllers
             return View();
         }
 
-        public ActionResult FolderFile3()//дерево
+        public ActionResult FolderFileTree()//дерево
         {
             List<Объединенная> combinedTables = new List<Объединенная>();
             var connection = new Npgsql.NpgsqlConnection("Host=localhost;Port=5432;Database=Проводник5;Username=postgres;Password=Coraks_86_");
             connection.Open();
-            var command = new Npgsql.NpgsqlCommand("SELECT  Папки.КодПапки, Папки.Название, Папки.КодРодительскойПапки, Файлы.Название, Файлы.КодПапки FROM Папки LEFT JOIN Файлы ON Папки.КодПапки = Файлы.КодПапки", connection);
+            var command = new Npgsql.NpgsqlCommand("SELECT  Папки.КодПапки, Папки.Название, Папки.КодРодительскойПапки, " +
+                                                            "Файлы.Название, Файлы.КодФайла FROM Папки LEFT JOIN Файлы ON Папки.КодПапки = Файлы.КодПапки " +
+                                                            "ORDER BY Папки.Название, Папки.КодПапки, Файлы.Название, Файлы.КодФайла", connection);
                 var reader = command.ExecuteReader();
                         while (reader.Read())
                         {
-                            var table1 = new Папка
+                            Папка table1 = new Папка
                             {
                                 КодПапки = reader.GetInt32(0),
                                 Название = reader.GetString(1),
                                 КодРодительскойПапки = reader.GetInt32(2),
                                 // Set other properties
                             };
-                            var table2 = new Файл
+                            //при добавлении папки которая не содержит файл
+                            Файл table2 = new()
                             {
-                                Название = reader.GetString(3),
-                                КодФайла = reader.GetInt32(4),
+                                Название = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                                КодФайла = reader.IsDBNull(4) ? -1 : reader.GetInt32(4),
                                 // Set other properties
                             };
                             combinedTables.Add(new Объединенная { ПапкаИзОбъединенной = table1, ФайлИзОбъединенной = table2 });
@@ -91,7 +95,9 @@ namespace WebApplicationMVC.Controllers
             List<Объединенная> combinedTables = new List<Объединенная>();
             var connection = new Npgsql.NpgsqlConnection("Host=localhost;Port=5432;Database=Проводник5;Username=postgres;Password=Coraks_86_");
             connection.Open();
-            var command = new Npgsql.NpgsqlCommand("SELECT  Папки.КодПапки, Папки.Название, Папки.КодРодительскойПапки, Файлы.Название, Файлы.КодПапки FROM Папки LEFT JOIN Файлы ON Папки.КодПапки = Файлы.КодПапки", connection);
+            var command = new Npgsql.NpgsqlCommand("SELECT  Папки.КодПапки, Папки.Название, Папки.КодРодительскойПапки, " +
+                                                            "Файлы.Название, Файлы.КодФайла FROM Папки LEFT JOIN Файлы ON Папки.КодПапки = Файлы.КодПапки " +
+                                                            "ORDER BY Папки.Название, Папки.КодПапки, Файлы.Название, Файлы.КодФайла", connection);
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -102,10 +108,20 @@ namespace WebApplicationMVC.Controllers
                     КодРодительскойПапки = reader.GetInt32(2),
                     // Set other properties
                 };
-                Файл table2 = new Файл
+                //при добавлении папки которая не содержит файл
+                //string названиевременое;
+                //int кодФайлавременое;
+                //if (reader.IsDBNull(3))
+                //    названиевременое = "";
+                //else названиевременое = reader.GetString(3);
+                //if (reader.IsDBNull(4))
+                //    кодФайлавременое = -1;
+                //else кодФайлавременое = reader.GetInt32(4);
+
+                Файл table2 = new()
                 {
-                    Название = reader.GetString(3),
-                    КодФайла = reader.GetInt32(4),
+                    Название = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                    КодФайла = reader.IsDBNull(4) ? -1 : reader.GetInt32(4),
                     // Set other properties
                 };
                 combinedTables.Add(new Объединенная { ПапкаИзОбъединенной = table1, ФайлИзОбъединенной = table2 });
@@ -124,6 +140,22 @@ namespace WebApplicationMVC.Controllers
         }
         //--------------------------------------------------------------------------------------------------
 
+        //--------------------------------------------------------------------------------------------------
+        public async Task<IActionResult> FileContent(int id)
+        {
+            return View(await db.Файлы.Where(s => s.КодФайла == id).ToListAsync());
+        }
+        //--------------------------------------------------------------------------------------------------
+        //public async Task<IActionResult> Icone(int id)
+        //{
+        //    return View(await db.Расширения.Where(s => s.КодТипаФайла == id).ToListAsync());
+        //}
+        //--------------------------------------------------------------------------------------------------
+        public async Task<IActionResult> Icone()
+        {
+            return View(await db.Расширения.Where(s => s.КодТипаФайла == 1).ToListAsync());
+        }
+        //--------------------------------------------------------------------------------------------------
         public IActionResult Index2()
         {
                 return View();
@@ -142,24 +174,57 @@ namespace WebApplicationMVC.Controllers
             return RedirectToAction("Index");
         }
 //--------------------------------------------------------------------------------------------------
-        public IActionResult DeleteF()
+        public IActionResult DeleteFolder()
         {
             return View();
         }
 //--------------------------------------------------------------------------------------------------
+                [HttpPost]
+                public async Task<IActionResult> DeleteFolder(Папка папка)
+                {
+                    if (папка.КодПапки != null)
+                    {
+                        db.Entry(папка).State = EntityState.Deleted;
+                        await db.SaveChangesAsync();
+                        return RedirectToAction("Index");
+                    }
+                    return NotFound();
+                }
+                //--------------------------------------------------------------------------------------------------
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteF(Папка папка)
+
+        public IActionResult DeleteFile()
         {
-            if (папка.КодПапки != null)
-            {
-                db.Entry(папка).State = EntityState.Deleted;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return NotFound();
+            return View();
         }
-//--------------------------------------------------------------------------------------------------
+
+        public IActionResult LoadFile()
+        {
+            return View();
+        }
+
+        public IActionResult Rename()
+        {
+            return View();
+        }
+
+        public IActionResult GetFile()
+        {
+            return View();
+        }
+        //--------------------------------------------------------------------------------------------------
+        [HttpPost]
+                public async Task<IActionResult> DeleteFile(Файл файл)
+                {
+                    if (файл.КодФайла!= null)
+                    {
+                        db.Entry(файл).State = EntityState.Deleted;
+                        await db.SaveChangesAsync();
+                        return RedirectToAction("Index");
+                    }
+                    return NotFound();
+                }
+                //--------------------------------------------------------------------------------------------------
         [HttpPost]
         public IActionResult Client(Client client)//в индексе форма настрона на стр клиент. обрабатываем метод_
                                                    //пост отправляемый при нажатии на кнопку сабмит в стр клиент, он сам передается в параметр 

@@ -1,0 +1,12 @@
+﻿
+@model IEnumerable<WebApplicationMVC.Models.Файл>
+ 
+
+
+    @foreach (var item in Model)
+    {
+        <h2>Содержимое файла: @item.Название</h2>
+        <div>
+            @item.Контент
+        </div>
+    }

@@ -84,5 +84,7 @@ public class Объединенная
 public class СписокОбъединенная
 {
     public int? Seed { get; set; } = 0; //Корневой элемент
+
+    public int? КодТекущаяПапка { get; set; } 
     public List<Объединенная>? CОбъединенная { get; set; }
 }

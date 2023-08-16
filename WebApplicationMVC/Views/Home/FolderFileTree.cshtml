@@ -1,0 +1,54 @@
+﻿@model WebApplicationMVC.Models.СписокОбъединенная
+
+<ul id="tree">
+    @foreach (var item in Model.CОбъединенная)
+    {
+        //Console.WriteLine("отладка Seed=:"+Model.Seed);
+        
+            @if (item.ПапкаИзОбъединенной.КодРодительскойПапки == Model.Seed)
+            {
+                 @if (Model.КодТекущаяПапка == null || Model.КодТекущаяПапка != item.ПапкаИзОбъединенной.КодПапки)
+                 {
+                    Model.КодТекущаяПапка = item.ПапкаИзОбъединенной.КодПапки;
+
+                    WebApplicationMVC.Models.СписокОбъединенная inner = new WebApplicationMVC.Models.СписокОбъединенная
+                        {
+                            Seed = item.ПапкаИзОбъединенной.КодПапки,
+                            CОбъединенная = Model.CОбъединенная
+                        };
+
+                    <li>
+                    <span parent-id="@item.ПапкаИзОбъединенной.КодПапки">
+                        <a href="#"  onclick="expand(this)">@item.ПапкаИзОбъединенной.Название</a>
+                    </span>
+                    @*Html.Partial("FolderFile3", inner)*@
+                    @await Html.PartialAsync("FolderFileTree", inner)
+                    </li>
+                }
+            }
+                @if (Model.Seed == item.ПапкаИзОбъединенной.КодПапки)
+
+                    @if (item.ФайлИзОбъединенной.КодФайла != -1)
+                    {
+                        <li>
+                            <a href="/home/FileContent?id=@item.ФайлИзОбъединенной.КодФайла">
+                                @*await Html.PartialAsync("Icone", item.ФайлИзОбъединенной.КодТипаФайла)*@ @*не получилось вывести иконку*@
+                                @item.ФайлИзОбъединенной.Название
+                            </a>
+                        </li>
+                    }
+    }
+</ul>
+
+  <script>
+    //var tree=document.getElementById('tree');
+
+    function expand(elem) 
+    {
+    var li = $(elem).parents('li')[0];
+    var ul = $(li).children('ul')[0];
+    $(ul).css('display') == 'none' ? $(ul).show() : $(ul).hide();
+    }
+
+  </script>
+

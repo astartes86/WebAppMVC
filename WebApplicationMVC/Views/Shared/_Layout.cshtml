@@ -20,29 +20,32 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FolderFileTree">Файлы и папки(дерево)</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Create">Добавить папку</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Create">Создать папку</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="DeleteF">Удалить папку</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="DeleteFolder">Удалить папку</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Folder">Папки</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LoadFile">Загрузить файл</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FolderFile">Файлы и папки(таблица)</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GetFile">Скачать файл</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FolderFile3">Файлы и папки(дерево)</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="DeleteFile">Удалить файл</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="File">Файлы</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Rename">Переименовать</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FolderFile">Файлы и папки(таблица для теста)</a>
+                        </li>
+                        @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index2">Аннуитентные</a>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
             </div>
