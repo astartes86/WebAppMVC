@@ -63,7 +63,9 @@ namespace WebApplicationMVC.Controllers
             var connection = new Npgsql.NpgsqlConnection("Host=localhost;Port=5432;Database=Проводник5;Username=postgres;Password=Coraks_86_");
             connection.Open();
             var command = new Npgsql.NpgsqlCommand("SELECT  Папки.КодПапки, Папки.Название, Папки.КодРодительскойПапки, " +
-                                                            "Файлы.Название, Файлы.КодФайла FROM Папки LEFT JOIN Файлы ON Папки.КодПапки = Файлы.КодПапки " +
+                                                            "Файлы.Название, Файлы.КодФайла, Расширения.Иконка " +
+                                                            "FROM Папки LEFT JOIN Файлы ON Папки.КодПапки = Файлы.КодПапки " +
+                                                                       "LEFT JOIN Расширения ON Файлы.КодТипаФайла = Расширения.КодТипаФайла " +
                                                             "ORDER BY Папки.Название, Папки.КодПапки, Файлы.Название, Файлы.КодФайла", connection);
                 var reader = command.ExecuteReader();
                         while (reader.Read())
@@ -82,7 +84,12 @@ namespace WebApplicationMVC.Controllers
                                 КодФайла = reader.IsDBNull(4) ? -1 : reader.GetInt32(4),
                                 // Set other properties
                             };
-                            combinedTables.Add(new Объединенная { ПапкаИзОбъединенной = table1, ФайлИзОбъединенной = table2 });
+                            Расширение table3 = new()
+                            {
+                                Иконка = reader.IsDBNull(5) ? "" : reader.GetString(5),
+                                // Set other properties
+                            };
+                combinedTables.Add(new Объединенная { ПапкаИзОбъединенной = table1, ФайлИзОбъединенной = table2, РасширениеИзОбъединенной = table3 });
                         }
             СписокОбъединенная model = new() { CОбъединенная = combinedTables };
             

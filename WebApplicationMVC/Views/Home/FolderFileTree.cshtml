@@ -31,6 +31,12 @@
                     @if (item.ФайлИзОбъединенной.КодФайла != -1)
                     {
                         <li>
+                            <style>
+                            .rotate-icon {
+                            transform: rotate(-90deg);
+                            }
+                            </style>
+                            <img src="@item.РасширениеИзОбъединенной.Иконка" alt="" class="rotate-icon"/>
                             <a href="/home/FileContent?id=@item.ФайлИзОбъединенной.КодФайла">
                                 @*await Html.PartialAsync("Icone", item.ФайлИзОбъединенной.КодТипаФайла)*@ @*не получилось вывести иконку*@
                                 @item.ФайлИзОбъединенной.Название
