@@ -197,8 +197,19 @@ namespace WebApplicationMVC.Controllers
                     }
                     return NotFound();
                 }
-                //--------------------------------------------------------------------------------------------------
-
+        //--------------------------------------------------------------------------------------------------
+        public IActionResult Rename()
+        {
+            return View();
+        }
+        //--------------------------------------------------------------------------------------------------
+        [HttpPost]
+        public async Task<IActionResult> Rename(Папка папка)
+        {
+            db.Папки.Update(папка);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
 
         public IActionResult DeleteFile()
         {
@@ -206,11 +217,6 @@ namespace WebApplicationMVC.Controllers
         }
 
         public IActionResult LoadFile()
-        {
-            return View();
-        }
-
-        public IActionResult Rename()
         {
             return View();
         }

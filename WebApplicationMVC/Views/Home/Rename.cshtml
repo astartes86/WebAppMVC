@@ -1,3 +1,30 @@
 ﻿
  
 <h2>Предполагаю, раз не указано что именно то надо как то выделять что именно переименоваить и делать запрос в БД insert или средствами Enitity Freimwork произвести тоже самое</h2>
+@model Папка
+@{
+    ViewData["Title"] = "Переименовать";
+}
+
+<h1>Переименовать папку</h1>
+
+
+ 
+<h2>Введите параметры :</h2>
+<form method="post"> @*action="/Home/Client"> метод пост чтоб уверенно удалять и по всем параметрам надо в сумме удалять - ToDo*@
+    <div class="col-md-2">
+    <p>
+            <label asp-for="КодПапки"class="control-label">Ставка:</label><br />
+            <input type="number" asp-for="КодПапки" class="form-control" value="1"/>
+            <span asp-validation-for="КодПапки" class="text-danger"></span>
+    </p>
+    <p>
+            <label asp-for="Название"class="control-label">Ставка:</label><br />
+            <input type="text" asp-for="Название" class="form-control" value="корень"/>
+            <span asp-validation-for="Название" class="text-danger"></span>
+    </p>
+    <p>
+        <input type="submit" value="Send" />
+    </p>
+    </div>
+</form>
