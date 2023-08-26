@@ -9,13 +9,11 @@ namespace WebApplicationMVC.Controllers
 {
     public class HomeController : Controller
     {
-
         ApplicationContext db;
         public HomeController(ApplicationContext context)
         {
             db = context;
         }
-
         //private readonly ILogger<HomeController> _logger;
 
         //public HomeController(ILogger<HomeController> logger)
@@ -33,7 +31,6 @@ namespace WebApplicationMVC.Controllers
                                                                 //{ Console.WriteLine("index id=" + x.Название); return new ПапкаПохожая(x);} надо запомнить!)
                 };
                 return View(model);
-
         }
 
         //--------------------------------------------------------------------------------------------------
@@ -158,33 +155,20 @@ namespace WebApplicationMVC.Controllers
         //    return View(await db.Расширения.Where(s => s.КодТипаФайла == id).ToListAsync());
         //}
         //--------------------------------------------------------------------------------------------------
-        public async Task<IActionResult> Icone()
+        public async Task<IActionResult> Icone()//тестил иконку - потом удалить
         {
             return View(await db.Расширения.Where(s => s.КодТипаФайла == 1).ToListAsync());
         }
-        //--------------------------------------------------------------------------------------------------
-        public IActionResult Index2()
-        {
-                return View();
-        }
-//--------------------------------------------------------------------------------------------------
-        public IActionResult Create()
-        {
-            return View();
-        }
+
 //--------------------------------------------------------------------------------------------------
         [HttpPost]
         public async Task<IActionResult> Create(Папка папка)
         {
             db.Папки.Add(папка);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("FolderFileTree");
         }
-//--------------------------------------------------------------------------------------------------
-        public IActionResult DeleteFolder()
-        {
-            return View();
-        }
+
 //--------------------------------------------------------------------------------------------------
                 [HttpPost]
                 public async Task<IActionResult> DeleteFolder(Папка папка)
@@ -193,39 +177,87 @@ namespace WebApplicationMVC.Controllers
                     {
                         db.Entry(папка).State = EntityState.Deleted;
                         await db.SaveChangesAsync();
-                        return RedirectToAction("Index");
+                        return RedirectToAction("FolderFileTree");
                     }
                     return NotFound();
-                }
-        //--------------------------------------------------------------------------------------------------
-        public IActionResult Rename()
-        {
-            return View();
+                    //return $"{папка.КодПапки}";
         }
+        //--------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------
         [HttpPost]
-        public async Task<IActionResult> Rename(Папка папка)
+        public async Task<IActionResult> UpdateFolder(Объединенная сущность) //из формы на странице Rename,
+                                                                             //если есть все данные в форме то редактирует запись,
+                                                                             //если нет - то добавляет новую
         {
-            db.Папки.Update(папка);
+                db.Папки.Update(сущность.ПапкаИзОбъединенной);
+                await db.SaveChangesAsync();
+                return RedirectToAction("FolderFileTree");
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateFile(Объединенная сущность)  //из формы на странице Rename,
+                                                                            //если есть все данные в форме то редактирует запись,
+                                                                            //если нет - то добавляет новую
+        {
+            db.Файлы.Update(сущность.ФайлИзОбъединенной);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("FolderFileTree");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Rename(Объединенная сущность)
+        {
+            if (сущность.ПапкаИзОбъединенной != null)
+                { сущность.ПапкаИзОбъединенной = await db.Папки.FirstOrDefaultAsync(p => p.КодПапки == сущность.ПапкаИзОбъединенной.КодПапки); }
+            if (сущность.ФайлИзОбъединенной != null)
+                { сущность.ФайлИзОбъединенной = await db.Файлы.FirstOrDefaultAsync(p => p.КодФайла == сущность.ФайлИзОбъединенной.КодФайла);}
+            return View(сущность);
+        }
+        //--------------------------------------------------------------------------------------------------
+        public async Task<IActionResult> Rename(int? id)
+        {
+            if (id != null)
+            {
+                Объединенная сущность = new()
+                { ПапкаИзОбъединенной = await db.Папки.FirstOrDefaultAsync(p => p.КодПапки == id),
+                  ФайлИзОбъединенной = await db.Файлы.FirstOrDefaultAsync(p => p.КодФайла == id) };
+                if (сущность.ПапкаИзОбъединенной != null) return View(сущность);
+                if (сущность.ФайлИзОбъединенной != null) return View(сущность);
+            }
+            return NotFound();
         }
 
+        //--------------------------------------------------------------------------------------------------
         public IActionResult DeleteFile()
         {
             return View();
         }
-
+        //--------------------------------------------------------------------------------------------------
+        public IActionResult DeleteFolder()
+        {
+            return View();
+        }
+        //--------------------------------------------------------------------------------------------------
         public IActionResult LoadFile()
         {
             return View();
         }
-
+        //--------------------------------------------------------------------------------------------------
         public IActionResult GetFile()
         {
             return View();
         }
         //--------------------------------------------------------------------------------------------------
+        public IActionResult Index2()
+        {
+            return View();
+        }
+        //--------------------------------------------------------------------------------------------------
+        public IActionResult Create()
+        {
+            return View();
+        }
+        //--------------------------------------------------------------------------------------------------
+
+
         [HttpPost]
                 public async Task<IActionResult> DeleteFile(Файл файл)
                 {
@@ -237,7 +269,8 @@ namespace WebApplicationMVC.Controllers
                     }
                     return NotFound();
                 }
-                //--------------------------------------------------------------------------------------------------
+
+        //--------------------------------------------------------------------------------------------------
         [HttpPost]
         public IActionResult Client(Client client)//в индексе форма настрона на стр клиент. обрабатываем метод_
                                                    //пост отправляемый при нажатии на кнопку сабмит в стр клиент, он сам передается в параметр 
@@ -294,8 +327,6 @@ namespace WebApplicationMVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
     }
 
     //public record class MyClient(string Name);

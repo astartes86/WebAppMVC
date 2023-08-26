@@ -1,10 +1,10 @@
 ﻿@model Папка
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Создать папку";
 }
 
-<h1>Создать</h1>
+<h1>Создать папку</h1>
 
 <h4>Папкa</h4>
 <hr />
@@ -14,6 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
  @* можно сделать поиск айди по названию и коду родителя, но пока некогда
 *@
+    <p>
             <div class="form-group">
                 <label asp-for="КодПапки" class="control-label"></label>
                 <input asp-for="КодПапки" class="form-control" />
@@ -29,16 +30,14 @@
                 <input asp-for="КодРодительскойПапки" class="form-control" />
                 <span asp-validation-for="КодРодительскойПапки" class="text-danger"></span>
             </div>
+    </p>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Создать" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,7 +1,4 @@
-﻿
- 
-<h2>Предполагаю, раз не указано что именно то надо как то выделять что именно переименоваить и делать запрос в БД insert или средствами Enitity Freimwork произвести тоже самое</h2>
-@model Папка
+﻿@model Объединенная
 @{
     ViewData["Title"] = "Переименовать";
 }
@@ -9,22 +6,85 @@
 <h1>Переименовать папку</h1>
 
 
- 
-<h2>Введите параметры :</h2>
+<h2>Введите параметры папки:</h2>
+
 <form method="post"> @*action="/Home/Client"> метод пост чтоб уверенно удалять и по всем параметрам надо в сумме удалять - ToDo*@
     <div class="col-md-2">
     <p>
-            <label asp-for="КодПапки"class="control-label">Ставка:</label><br />
-            <input type="number" asp-for="КодПапки" class="form-control" value="1"/>
-            <span asp-validation-for="КодПапки" class="text-danger"></span>
+            <label asp-for="ПапкаИзОбъединенной.КодПапки"class="control-label">Номер папки в базе:</label><br />
+            <input type="number" asp-for="ПапкаИзОбъединенной.КодПапки" class="form-control"/>
+            <span asp-validation-for="ПапкаИзОбъединенной.КодПапки" class="text-danger"></span>
     </p>
     <p>
-            <label asp-for="Название"class="control-label">Ставка:</label><br />
-            <input type="text" asp-for="Название" class="form-control" value="корень"/>
-            <span asp-validation-for="Название" class="text-danger"></span>
-    </p>
-    <p>
-        <input type="submit" value="Send" />
+        <input type="submit" value="Получить" class="btn btn-primary"/>
     </p>
     </div>
+</form>
+
+<form asp-action="UpdateFolder" asp-controller="home" >
+    <p>
+           <div class="form-group">
+                <label asp-for="ПапкаИзОбъединенной.КодПапки" class="control-label"></label>
+                <input asp-for="ПапкаИзОбъединенной.КодПапки" class="form-control" />
+                <span asp-validation-for="ПапкаИзОбъединенной.КодПапки" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ПапкаИзОбъединенной.Название" class="control-label"></label>
+                <input asp-for="ПапкаИзОбъединенной.Название" class="form-control" />
+                <span asp-validation-for="ПапкаИзОбъединенной.Название" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ПапкаИзОбъединенной.КодРодительскойПапки" class="control-label"></label>
+                <input asp-for="ПапкаИзОбъединенной.КодРодительскойПапки" class="form-control" />
+                <span asp-validation-for="ПапкаИзОбъединенной.КодРодительскойПапки" class="text-danger"></span>
+            </div>
+    </p>
+    <p>
+        <input type="submit" value="Переименовать" class="btn btn-primary"/>
+    </p>
+</form>
+
+
+<h2>Введите параметры файла:</h2>
+<form method="post">
+    <div class="col-md-2">
+    <p>
+            <label asp-for="ФайлИзОбъединенной.КодФайла"class="control-label">Номер файла в базе:</label><br />
+            <input type="number" asp-for="ФайлИзОбъединенной.КодФайла" class="form-control"/>
+            <span asp-validation-for="ФайлИзОбъединенной.КодФайла" class="text-danger"></span>
+    </p>
+    <p>
+        <input type="submit" value="Получить" class="btn btn-primary"/>
+    </p>
+    </div>
+</form>
+
+<form asp-action="UpdateFile" asp-controller="home" >
+    <p>
+        <label asp-for="ФайлИзОбъединенной.Название">Название файла</label><br />
+        <input type="text" asp-for="ФайлИзОбъединенной.Название" />
+    </p>
+    <p>
+        <label asp-for="ФайлИзОбъединенной.КодФайла">Код файла</label><br />
+        <input type="text" asp-for="ФайлИзОбъединенной.КодФайла" />
+    </p>
+    <p>
+        <label asp-for="ФайлИзОбъединенной.Описание">Описание файла</label><br />
+        <input type="text" asp-for="ФайлИзОбъединенной.Описание" />
+    </p>
+    <p>
+        <label asp-for="ФайлИзОбъединенной.КодТипаФайла">Код типа файла</label><br />
+        <input type="text" asp-for="ФайлИзОбъединенной.КодТипаФайла" />
+    </p>
+    <p>
+        <label asp-for="ФайлИзОбъединенной.КодПапки">Код папки где находится файл</label><br />
+        <input type="text" asp-for="ФайлИзОбъединенной.КодПапки" />
+    </p>
+    <p>
+        <label asp-for="ФайлИзОбъединенной.Контент">Контент файла</label><br />
+        <input type="text" asp-for="ФайлИзОбъединенной.Контент" />
+    </p>
+    <p>
+        <input type="submit" value="Переименовать" class="btn btn-primary"/>
+    </p>
 </form>
