@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder();
 //string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 // Add services to the container.
 // добавляем контекст ApplicationContext в качестве сервиса в приложение
-builder.Services.AddDbContext<ApplicationContext>();//(options => options.UseNpgsql(connection));
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));//(options => options.UseNpgsql(connection));
 
 
 builder.Services.AddControllersWithViews();
@@ -25,6 +25,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+IConfiguration configuration = app.Configuration;
 
 //app.MapDefaultControllerRoute();
 app.MapControllerRoute(

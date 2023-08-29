@@ -1,4 +1,4 @@
-﻿@model Файл
+﻿@model File
 @{
     ViewData["Title"] = "Удалить файл";
 }
@@ -11,9 +11,9 @@
 <form method="post"> @*action="/Home/Client"> метод пост чтоб уверенно удалять и по всем параметрам надо в сумме удалять - ToDo*@
     <div class="col-md-2">
     <p>
-            <label asp-for="КодФайла"class="control-label">Номер файла в базе:</label><br />
-            <input type="number" asp-for="КодФайла" class="form-control" value="2"/>
-            <span asp-validation-for="КодФайла" class="text-danger"></span>
+            <label asp-for="codefile"class="control-label">Номер файла в базе:</label><br />
+            <input type="number" asp-for="codefile" class="form-control" value="2"/>
+            <span asp-validation-for="codefile" class="text-danger"></span>
     </p>
     <p>
         <input type="submit" value="Удалить" class="btn btn-primary"/>

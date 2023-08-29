@@ -5,30 +5,30 @@
     {
         //Console.WriteLine("отладка Seed=:"+Model.Seed);
         
-            @if (item.ПапкаИзОбъединенной.КодРодительскойПапки == Model.Seed)
+            @if (item.ПапкаИзОбъединенной.codeparentfolder == Model.Seed)
             {
-                 @if (Model.КодТекущаяПапка == null || Model.КодТекущаяПапка != item.ПапкаИзОбъединенной.КодПапки)
+                 @if (Model.КодТекущаяПапка == null || Model.КодТекущаяПапка != item.ПапкаИзОбъединенной.codefolder)
                  {
-                    Model.КодТекущаяПапка = item.ПапкаИзОбъединенной.КодПапки;
+                    Model.КодТекущаяПапка = item.ПапкаИзОбъединенной.codefolder;
 
                     WebApplicationMVC.Models.СписокОбъединенная inner = new WebApplicationMVC.Models.СписокОбъединенная
                         {
-                            Seed = item.ПапкаИзОбъединенной.КодПапки,
+                            Seed = item.ПапкаИзОбъединенной.codefolder,
                             CОбъединенная = Model.CОбъединенная
                         };
 
                     <li>
-                    <span parent-id="@item.ПапкаИзОбъединенной.КодПапки">
-                        <a href="#"  onclick="expand(this)">@item.ПапкаИзОбъединенной.Название</a>
+                    <span parent-id="@item.ПапкаИзОбъединенной.codefolder">
+                        <a href="#"  onclick="expand(this)">@item.ПапкаИзОбъединенной.name</a>
                     </span>
                     @*Html.Partial("FolderFile3", inner)*@
                     @await Html.PartialAsync("FolderFileTree", inner)
                     </li>
                 }
             }
-                @if (Model.Seed == item.ПапкаИзОбъединенной.КодПапки)
+                @if (Model.Seed == item.ПапкаИзОбъединенной.codefolder)
 
-                    @if (item.ФайлИзОбъединенной.КодФайла != -1)
+                    @if (item.ФайлИзОбъединенной.codefile != -1)
                     {
                         <li>
                             <style>
@@ -36,10 +36,10 @@
                             transform: rotate(-90deg);
                             }
                             </style>
-                            <img src="@item.РасширениеИзОбъединенной.Иконка" alt="" class="rotate-icon"/>
-                            <a href="/home/FileContent?id=@item.ФайлИзОбъединенной.КодФайла" class="DoubleClick" >
+                            <img src="@item.РасширениеИзОбъединенной.icone" alt="" class="rotate-icon"/>
+                            <a href="/home/FileContent?id=@item.ФайлИзОбъединенной.codefile" class="DoubleClick" >
                                 @*await Html.PartialAsync("Icone", item.ФайлИзОбъединенной.КодТипаФайла)*@ @*не получилось вывести иконку*@
-                                @item.ФайлИзОбъединенной.Название
+                                @item.ФайлИзОбъединенной.namefile
                             </a>
                         </li>
                     }

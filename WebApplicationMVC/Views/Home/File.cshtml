@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<WebApplicationMVC.Models.Файл>
+@model IEnumerable<WebApplicationMVC.Models.File>
  
 <h2>Файл</h2>
 <table class="table">
@@ -7,11 +7,11 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.КодФайла</td>
-            <td>@item.Название</td>
-            <td>@item.Описание</td>
-            <td>@item.КодТипаФайла</td>
-            <td>@item.КодПапки</td>
+            <td>@item.codefile</td>
+            <td>@item.namefile</td>
+            <td>@item.About</td>
+            <td>@item.codetypefolder</td>
+            <td>@item.codefolder</td>
         </tr>
     }
 </table>

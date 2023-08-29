@@ -1,4 +1,4 @@
-﻿@model Папка
+﻿@model Folder
 @{
     ViewData["Title"] = "Удалить папку";
 }
@@ -11,9 +11,9 @@
 <form method="post"> @*action="/Home/Client"> метод пост чтоб уверенно удалять и по всем параметрам надо в сумме удалять - ToDo*@
     <div class="col-md-2">
     <p>
-            <label asp-for="КодПапки"class="control-label">Номер папки в базе:</label><br />
-            <input type="number" asp-for="КодПапки" class="form-control" value="2"/>
-            <span asp-validation-for="КодПапки" class="text-danger"></span>
+            <label asp-for="codefolder"class="control-label">Номер папки в базе:</label><br />
+            <input type="number" asp-for="codefolder" class="form-control" value="2"/>
+            <span asp-validation-for="codefolder" class="text-danger"></span>
     </p>
     <p>
         <input type="submit" value="Удалить" class="btn btn-primary"/>

@@ -1,39 +1,39 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace WebApplicationMVC.Models;
-public class Папка
+public class Folder
     {
         [Key]
-        public int КодПапки { get; set; }
-        public string? Название { get; set; } // 
-        public int КодРодительскойПапки { get; set; } // 
+        public int codefolder { get; set; }
+        public string? name { get; set; } // 
+        public int codeparentfolder { get; set; } // 
     }
 
-public class Файл
+public class File
 {
     [Key]
-    public int КодФайла { get; set; }
-    public string? Название { get; set; } // 
-    public string? Описание { get; set; }
-    public int КодТипаФайла { get; set; } // 
+    public int codefile { get; set; }
+    public string? namefile { get; set; } // 
+    public string? About { get; set; }
+    public int codetypefolder { get; set; } // 
    //[Key]
-    public int КодПапки { get; set; }
-    public string? Контент { get; set; }
+    public int codefolder { get; set; }
+    public string? Content { get; set; }
 }
-public class Расширение
+public class Extension
 {
     [Key]
-    public int КодТипаФайла { get; set; }
-    public string? Тип { get; set; } // 
-    public string? Иконка { get; set; } // 
+    public int codetypefolder { get; set; }
+    public string? Type { get; set; } // 
+    public string? icone { get; set; } // 
 }
 public class ПапкаПохожая
 {
     // [Key]
-    internal ПапкаПохожая(Папка папка)
+    internal ПапкаПохожая(Folder папка)
     {
-        this.КодПапки = папка.КодПапки;
-        this.Название = папка.Название;
-        this.КодРодительскойПапки = папка.КодРодительскойПапки;
+        this.КодПапки = папка.codefolder;
+        this.Название = папка.name;
+        this.КодРодительскойПапки = папка.codeparentfolder;
     }
     public int КодПапки { get; set; }
     public string? Название { get; set; } // 
@@ -53,11 +53,11 @@ public class СписокПапок
 public class ПапкиФайлыРасш
 {
     // [Key]
-    internal ПапкиФайлыРасш(Папка папка)
+    internal ПапкиФайлыРасш(Folder папка)
     {
-        this.КодПапки = папка.КодПапки;
-        this.Название = папка.Название;
-        this.КодРодительскойПапки = папка.КодРодительскойПапки;
+        this.КодПапки = папка.codefolder;
+        this.Название = папка.name;
+        this.КодРодительскойПапки = папка.codeparentfolder;
         //this.НазваниеФайла = файл.Название;
         //this.КодФайла = файл.КодФайла;
     }
@@ -77,9 +77,9 @@ public class СписокПапкиФайлыРасш
 
 public class Объединенная
 {
-    public Папка ПапкаИзОбъединенной { get; set; }
-    public Файл ФайлИзОбъединенной { get; set; }
-    public Расширение РасширениеИзОбъединенной { get; set; }
+    public Folder ПапкаИзОбъединенной { get; set; }
+    public File ФайлИзОбъединенной { get; set; }
+    public Extension РасширениеИзОбъединенной { get; set; }
 }
 
 public class СписокОбъединенная
