@@ -18,7 +18,7 @@
                         };
 
                     <li>
-                    <span parent-id="@item.ПапкаИзОбъединенной.codefolder">
+                    <span  parent-id="@item.ПапкаИзОбъединенной.codefolder">
                         <a href="#"  onclick="expand(this)">@item.ПапкаИзОбъединенной.name</a>
                     </span>
                     @*Html.Partial("FolderFile3", inner)*@
@@ -37,7 +37,7 @@
                             }
                             </style>
                             <img src="@item.РасширениеИзОбъединенной.icone" alt="" class="rotate-icon"/>
-                            <a href="/home/FileContent?id=@item.ФайлИзОбъединенной.codefile" class="DoubleClick" >
+                            <a href="/home/FileContent?id=@item.ФайлИзОбъединенной.codefile" title="@item.ФайлИзОбъединенной.about" class="DoubleClick" >
                                 @*await Html.PartialAsync("Icone", item.ФайлИзОбъединенной.КодТипаФайла)*@ @*не получилось вывести иконку*@
                                 @item.ФайлИзОбъединенной.namefile
                             </a>

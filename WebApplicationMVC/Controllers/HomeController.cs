@@ -32,14 +32,14 @@ namespace WebApplicationMVC.Controllers
                 Folder scada = new() { codefolder = 4, name = "СКАДА", codeparentfolder = 2 };
                 Folder books = new() { codefolder = 5, name = "Книги", codeparentfolder = 1 };
 
-                Models.File f1 = new() { codefile = 1, namefile = "Scneider", About = "About1", codetypefolder = 1, codefolder = 2, Content = "" };
-                Models.File f2 = new() { codefile = 2, namefile = "Важное", About = "About2", codetypefolder = 1, codefolder = 3, Content = "" };
-                Models.File f3 = new() { codefile = 3, namefile = "Срочное", About = "About3", codetypefolder = 2, codefolder = 3, Content = "" };
-                Models.File f4 = new() { codefile = 4, namefile = "Морковь", About = "About4", codetypefolder = 1, codefolder = 1, Content = "" };
-                Models.File f5 = new() { codefile = 5, namefile = "Свекла", About = "About5", codetypefolder = 1, codefolder = 1, Content = "" };
-                Models.File f6 = new() { codefile = 6, namefile = "Над пропастью во ржи", About = "About6", codetypefolder = 5, codefolder = 2, Content = "" };
-                Models.File f7 = new() { codefile = 7, namefile = "Война и мир", About = "About7", codetypefolder = 2, codefolder = 5, Content = "" };
-                Models.File f8 = new() { codefile = 8, namefile = "iFix", About = "About8", codetypefolder = 2, codefolder = 3, Content = "" };
+                Models.File f1 = new() { codefile = 1, namefile = "Scneider", about = "About1", codetypefolder = 1, codefolder = 2, Content = "" };
+                Models.File f2 = new() { codefile = 2, namefile = "Важное", about = "About2", codetypefolder = 1, codefolder = 3, Content = "" };
+                Models.File f3 = new() { codefile = 3, namefile = "Срочное", about = "About3", codetypefolder = 2, codefolder = 3, Content = "" };
+                Models.File f4 = new() { codefile = 4, namefile = "Морковь", about = "About4", codetypefolder = 1, codefolder = 1, Content = "" };
+                Models.File f5 = new() { codefile = 5, namefile = "Свекла", about = "About5", codetypefolder = 1, codefolder = 1, Content = "" };
+                Models.File f6 = new() { codefile = 6, namefile = "Над пропастью во ржи", about = "About6", codetypefolder = 5, codefolder = 2, Content = "" };
+                Models.File f7 = new() { codefile = 7, namefile = "Война и мир", about = "About7", codetypefolder = 2, codefolder = 5, Content = "" };
+                Models.File f8 = new() { codefile = 8, namefile = "iFix", about = "About8", codetypefolder = 2, codefolder = 3, Content = "" };
 
                 Extension e1 = new()
                 {
@@ -109,7 +109,7 @@ namespace WebApplicationMVC.Controllers
             var connection = new Npgsql.NpgsqlConnection(_configuration["ConnectionStrings:DefaultConnection"]);
             connection.Open();
             var command = new Npgsql.NpgsqlCommand("SELECT  Папки.codefolder, Папки.name, Папки.codeparentfolder, " +
-                                                            "Файлы.namefile, Файлы.codefile, Расширения.icone " +
+                                                            "Файлы.namefile, Файлы.codefile, Файлы.about, Расширения.icone " +
                                                             "FROM Папки LEFT JOIN Файлы ON Папки.codefolder = Файлы.codefolder " +
                                                                        "LEFT JOIN Расширения ON Файлы.codetypefolder = Расширения.codetypefolder " +
                                                             "ORDER BY Папки.name, Папки.codeFolder, Файлы.namefile, Файлы.codefile", connection);
@@ -128,11 +128,12 @@ namespace WebApplicationMVC.Controllers
                             {
                                 namefile = reader.IsDBNull(3) ? "" : reader.GetString(3),
                                 codefile = reader.IsDBNull(4) ? -1 : reader.GetInt32(4),
+                                about= reader.IsDBNull(5) ? "" : reader.GetString(5),
                                 // Set other properties
                             };
                             Extension table3 = new()
                             {
-                                icone = reader.IsDBNull(5) ? "" : reader.GetString(5),
+                                icone = reader.IsDBNull(6) ? "" : reader.GetString(6),
                                 // Set other properties
                             };
                 combinedTables.Add(new Объединенная { ПапкаИзОбъединенной = table1, ФайлИзОбъединенной = table2, РасширениеИзОбъединенной = table3 });

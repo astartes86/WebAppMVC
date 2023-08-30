@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace WebApplicationMVC.Models;
+
+//пришлось именовать маленькими потому что после пререименования на инглиш, посгре почему то начал ругаться на то
+//что он не понимает верхний регистр, вроде с версии 12.5 такая ошибка появилась
 public class Folder
     {
         [Key]
@@ -13,7 +16,7 @@ public class File
     [Key]
     public int codefile { get; set; }
     public string? namefile { get; set; } // 
-    public string? About { get; set; }
+    public string? about { get; set; }
     public int codetypefolder { get; set; } // 
    //[Key]
     public int codefolder { get; set; }
