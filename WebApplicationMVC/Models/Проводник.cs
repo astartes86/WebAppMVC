@@ -26,7 +26,7 @@ public class Extension
 {
     [Key]
     public int codetypefolder { get; set; }
-    public string? Type { get; set; } // 
+    public string? type { get; set; } // 
     public string? icone { get; set; } // 
 }
 public class ПапкаПохожая

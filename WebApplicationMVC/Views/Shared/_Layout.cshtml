@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApplicationMVC.styles.css" asp-append-version="true" />
+    </style>
 </head>
 <body>
     <header>
@@ -41,7 +42,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Rename" asp-route-id = '1' >Переименовать</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FolderFile">Файлы и папки(таблица для теста)</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TT">Файлы и папки(таблица для теста)</a>
                         </li>
                         @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index2">Аннуитентные</a>
@@ -51,6 +52,7 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

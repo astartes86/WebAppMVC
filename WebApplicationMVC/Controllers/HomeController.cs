@@ -44,7 +44,7 @@ namespace WebApplicationMVC.Controllers
                 Extension e1 = new()
                 {
                     codetypefolder = 1,
-                    Type = "файл1",
+                    type = ".zip",
                     icone = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXN" +
                     "SR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACJSURBVEhL7ZC9CYBADEbP2iEEp7JxAPdwBZex02EcQ/0iBCzC/ZlTkDx4RYrLC+cMwzB+QQ1bRR" +
                     "tYwSAbPJQdoRe6bIbS41x32MEg9NULlJakStEBRqMRT44yFF+htDRkdpTJiT+OMilxtSgTE1ePMr54sSgjxYtHmXv8tShD8Qn212QYxnc4dwKskJKEHrOFUQAAAABJRU5ErkJggg=="
@@ -52,7 +52,7 @@ namespace WebApplicationMVC.Controllers
                 Extension e2 = new()
                 {
                     codetypefolder = 2,
-                    Type = "файл2",
+                    type = ".exe",
                     icone = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXN" +
                     "SR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACJSURBVEhL7ZC9CYBADEbP2iEEp7JxAPdwBZex02EcQ/0iBCzC/ZlTkDx4RYrLC+cMwzB+QQ1bRR" +
                     "tYwSAbPJQdoRe6bIbS41x32MEg9NULlJakStEBRqMRT44yFF+htDRkdpTJiT+OMilxtSgTE1ePMr54sSgjxYtHmXv8tShD8Qn212QYxnc4dwKskJKEHrOFUQAAAABJRU5ErkJggg=="
@@ -109,7 +109,7 @@ namespace WebApplicationMVC.Controllers
             var connection = new Npgsql.NpgsqlConnection(_configuration["ConnectionStrings:DefaultConnection"]);
             connection.Open();
             var command = new Npgsql.NpgsqlCommand("SELECT  Папки.codefolder, Папки.name, Папки.codeparentfolder, " +
-                                                            "Файлы.namefile, Файлы.codefile, Файлы.about, Расширения.icone " +
+                                                            "Файлы.namefile, Файлы.codefile, Файлы.about, Расширения.type, Расширения.icone " +
                                                             "FROM Папки LEFT JOIN Файлы ON Папки.codefolder = Файлы.codefolder " +
                                                                        "LEFT JOIN Расширения ON Файлы.codetypefolder = Расширения.codetypefolder " +
                                                             "ORDER BY Папки.name, Папки.codeFolder, Файлы.namefile, Файлы.codefile", connection);
@@ -133,7 +133,8 @@ namespace WebApplicationMVC.Controllers
                             };
                             Extension table3 = new()
                             {
-                                icone = reader.IsDBNull(6) ? "" : reader.GetString(6),
+                                type = reader.IsDBNull(6) ? "" : reader.GetString(6),
+                                icone = reader.IsDBNull(7) ? "" : reader.GetString(7),
                                 // Set other properties
                             };
                 combinedTables.Add(new Объединенная { ПапкаИзОбъединенной = table1, ФайлИзОбъединенной = table2, РасширениеИзОбъединенной = table3 });
@@ -304,6 +305,11 @@ namespace WebApplicationMVC.Controllers
         }
         //--------------------------------------------------------------------------------------------------
         public IActionResult Create()
+        {
+            return View();
+        }
+
+        public IActionResult TT()
         {
             return View();
         }
