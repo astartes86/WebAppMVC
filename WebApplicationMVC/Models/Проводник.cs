@@ -29,6 +29,7 @@ public class Extension
     public string? type { get; set; } // 
     public string? icone { get; set; } // 
 }
+
 public class ПапкаПохожая
 {
     // [Key]
