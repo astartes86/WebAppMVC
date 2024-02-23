@@ -1,4 +1,4 @@
-﻿@model Объединенная
+﻿@model United
 @{
     ViewData["Title"] = "Переименовать";
 }
@@ -11,9 +11,9 @@
 <form method="post"> @*action="/Home/Client"> метод пост чтоб уверенно удалять и по всем параметрам надо в сумме удалять - ToDo*@
     <div class="col-md-2">
     <p>
-            <label asp-for="ПапкаИзОбъединенной.codefolder"class="control-label">Номер папки в базе:</label><br />
-            <input type="number" asp-for="ПапкаИзОбъединенной.codefolder" class="form-control"/>
-            <span asp-validation-for="ПапкаИзОбъединенной.codefolder" class="text-danger"></span>
+            <label asp-for="ObjFromUnited.id"class="control-label">Номер папки в базе:</label><br />
+            <input type="number" asp-for="ObjFromUnited.id" class="form-control"/>
+            <span asp-validation-for="ObjFromUnited.id" class="text-danger"></span>
     </p>
     <p>
         <input type="submit" value="Получить" class="btn btn-primary"/>
@@ -24,19 +24,19 @@
 <form asp-action="UpdateFolder" asp-controller="home" >
     <p>
            <div class="form-group">
-                <label asp-for="ПапкаИзОбъединенной.codefolder" class="control-label"></label>
-                <input asp-for="ПапкаИзОбъединенной.codefolder" class="form-control" />
-                <span asp-validation-for="ПапкаИзОбъединенной.codefolder" class="text-danger"></span>
+                <label asp-for="ObjFromUnited.id" class="control-label"></label>
+                <input asp-for="ObjFromUnited.id" class="form-control" />
+                <span asp-validation-for="ObjFromUnited.id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ПапкаИзОбъединенной.name" class="control-label"></label>
-                <input asp-for="ПапкаИзОбъединенной.name" class="form-control" />
-                <span asp-validation-for="ПапкаИзОбъединенной.name" class="text-danger"></span>
+                <label asp-for="ObjFromUnited.type" class="control-label"></label>
+                <input asp-for="ObjFromUnited.type" class="form-control" />
+                <span asp-validation-for="ObjFromUnited.type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ПапкаИзОбъединенной.codeparentfolder" class="control-label"></label>
-                <input asp-for="ПапкаИзОбъединенной.codeparentfolder" class="form-control" />
-                <span asp-validation-for="ПапкаИзОбъединенной.codeparentfolder" class="text-danger"></span>
+                <label asp-for="ObjFromUnited.product" class="control-label"></label>
+                <input asp-for="ObjFromUnited.product" class="form-control" />
+                <span asp-validation-for="ObjFromUnited.product" class="text-danger"></span>
             </div>
     </p>
     <p>
@@ -49,9 +49,9 @@
 <form method="post">
     <div class="col-md-2">
     <p>
-            <label asp-for="ФайлИзОбъединенной.codefile"class="control-label">Номер файла в базе:</label><br />
-            <input type="number" asp-for="ФайлИзОбъединенной.codefile" class="form-control"/>
-            <span asp-validation-for="ФайлИзОбъединенной.codefile" class="text-danger"></span>
+            <label asp-for="AttrFromUnited.objectId"class="control-label">Номер файла в базе:</label><br />
+            <input type="number" asp-for="AttrFromUnited.objectId" class="form-control"/>
+            <span asp-validation-for="AttrFromUnited.objectId" class="text-danger"></span>
     </p>
     <p>
         <input type="submit" value="Получить" class="btn btn-primary"/>
@@ -61,28 +61,16 @@
 
 <form asp-action="UpdateFile" asp-controller="home" >
     <p>
-        <label asp-for="ФайлИзОбъединенной.namefile">Название файла</label><br />
-        <input type="text" asp-for="ФайлИзОбъединенной.namefile" />
+        <label asp-for="AttrFromUnited.name">Название файла</label><br />
+        <input type="text" asp-for="AttrFromUnited.name" />
     </p>
     <p>
-        <label asp-for="ФайлИзОбъединенной.codefile">Код файла</label><br />
-        <input type="text" asp-for="ФайлИзОбъединенной.codefile" />
+        <label asp-for="AttrFromUnited.objectId">Код файла</label><br />
+        <input type="text" asp-for="AttrFromUnited.objectId" />
     </p>
     <p>
-        <label asp-for="ФайлИзОбъединенной.about">Описание файла</label><br />
-        <input type="text" asp-for="ФайлИзОбъединенной.about" />
-    </p>
-    <p>
-        <label asp-for="ФайлИзОбъединенной.codetypefolder">Код типа файла</label><br />
-        <input type="text" asp-for="ФайлИзОбъединенной.codetypefolder" />
-    </p>
-    <p>
-        <label asp-for="ФайлИзОбъединенной.codefolder">Код папки где находится файл</label><br />
-        <input type="text" asp-for="ФайлИзОбъединенной.codefolder" />
-    </p>
-    <p>
-        <label asp-for="ФайлИзОбъединенной.Content">Контент файла</label><br />
-        <input type="text" asp-for="ФайлИзОбъединенной.Content" />
+        <label asp-for="AttrFromUnited.value">Описание файла</label><br />
+        <input type="text" asp-for="AttrFromUnited.value" />
     </p>
     <p>
         <input type="submit" value="Переименовать" class="btn btn-primary"/>

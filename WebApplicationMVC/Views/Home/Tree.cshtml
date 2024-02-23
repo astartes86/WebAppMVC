@@ -1,0 +1,52 @@
+﻿@model WebApplicationMVC.Models.ListUnited
+@{
+    Layout = null; // Устанавливаем значение Layout в null, чтобы не использовать макет
+}
+
+
+
+
+        <ul id="tree" >
+
+                @foreach (var item in Model.LUnited)
+                {
+                    //Console.WriteLine("отладка Seed=:"+Model.Seed);
+        
+                        @if (item.ObjFromUnited.id == Model.Seed)
+                        {
+                             @if (Model.КодТекущаяПапка == null || Model.КодТекущаяПапка != item.ObjFromUnited.id)
+                             {
+                                Model.КодТекущаяПапка = item.ObjFromUnited.id;
+
+                                WebApplicationMVC.Models.ListUnited inner = new WebApplicationMVC.Models.ListUnited
+                                    {
+                                        Seed = item.ObjFromUnited.id,
+                                        LUnited = Model.LUnited
+                                    };
+
+                                <li>
+                                <span  parent-id="@item.ObjFromUnited.id">
+                                    <a href="#"  onclick="expand(this)">@item.ObjFromUnited.type</a>
+                                </span>
+                                @*Html.Partial("FolderFile3", inner)*@
+                                @await Html.PartialAsync("FolderFileTree", inner)
+                                </li>
+                            }
+                        }
+                }
+
+        </ul>
+
+
+  <script>
+    //var tree=document.getElementById('tree');
+
+    function expand(elem) 
+    {
+    var li = $(elem).parents('li')[0];
+    var ul = $(li).children('ul')[0];
+    $(ul).css('display') == 'none' ? $(ul).show() : $(ul).hide();
+    }
+
+  </script>
+

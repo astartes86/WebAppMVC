@@ -1,0 +1,21 @@
+﻿@model List<United>
+<table>
+    <tr>
+        <th>Идентификатор</th>
+        <th>Тип</th>
+        <th>Продукт</th>
+        <th>Аттрибут</th>
+        <th>айдиОбъВаттр</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ObjFromUnited.id</td>
+            <td>@item.ObjFromUnited.type</td>
+            <td>@item.ObjFromUnited.product</td>
+            <td>@item.AttrFromUnited.name</td>
+            <td>@item.AttrFromUnited.objectId</td>
+        </tr>
+    }
+</table>
+

@@ -5,9 +5,9 @@ namespace WebApplicationMVC.Models
 {
     public class ApplicationContext : DbContext
     {
-        public DbSet<Folder> Папки { get; set; } = null!;//создаем таблмчку для создания посгре базе
-        public DbSet<File> Файлы { get; set; } = null!;
-        public DbSet<Extension> Расширения { get; set; } = null!;
+        public DbSet<Objects> Obj { get; set; } = null!;//создаем таблмчку для создания посгре базе
+        public DbSet<Attributes> Attr { get; set; } = null!;
+        public DbSet<Links> Links { get; set; } = null!;
 
         //------------------------------------ вариант где задаем строку подключения при вызове
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)//так надо чтоб строка подключения заработала

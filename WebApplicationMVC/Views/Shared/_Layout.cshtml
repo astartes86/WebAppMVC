@@ -21,28 +21,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FolderFileTree">Файлы и папки(дерево)</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Tree">Файлы и папки(дерево)</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Create">Создать папку</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="DeleteFolder">Удалить папку</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ObjDelete">Удалить папку</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LoadFile">Загрузить файл</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GetFile">Скачать файл</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="DeleteFile">Удалить файл</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AttrContent">Удалить файл</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Rename" asp-route-id = '1' >Переименовать</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TT">Файлы и папки(таблица для теста)</a>
                         </li>
                         @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index2">Аннуитентные</a>

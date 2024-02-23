@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<WebApplicationMVC.Models.Folder>
+@model IEnumerable<WebApplicationMVC.Models.Objects>
  
 <h2>Добро пожаловать в тестовую программу Проводник</h2>
 <p><a asp-action="Create">Добавить папку</a></p>
@@ -8,9 +8,9 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.codefolder</td>
-            <td>@item.name</td>
-            <td>@item.codeparentfolder</td>
+            <td>@item.id</td>
+            <td>@item.type</td>
+            <td>@item.product</td>
         </tr>
     }
 </table>
