@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplicationMVC.Models;
@@ -16,39 +17,21 @@ public class Objects
 public class Links
 {
     [Key]
-    public int parentId { get; set; }
+    public int id { get; set; }
+    public int? parentId { get; set; }
     public int childId { get; set; } // 
 }
 
 public class Attributes
 {
     [Key]
-    public int objectId { get; set; }
+    public int id { get; set; }
     public string name { get; set; } // 
     public string value { get; set; }
 }
 
 
-public class LikeSameObj
-{
-    // [Key]
-    internal LikeSameObj(Objects Obj)
-    {
-        this.id = Obj.id;
-        this.type = Obj.type;
-        this.product = Obj.product;
-    }
-    public int id { get; set; }
-    public string type { get; set; } 
-    public string product { get; set; } 
 
-}
-
-public class ListObj
-{
-    public int? Seed { get; set; } = 0; //Корневой элемент
-    public IEnumerable<LikeSameObj> LObj { get; set; }
-}
 
 public class United
 {
@@ -59,8 +42,8 @@ public class United
 
 public class ListUnited
 {
-    public int Seed { get; set; } = 0; //Корневой элемент
+    public int? Seed { get; set; } = 0; //Корневой элемент
 
-    public int КодТекущаяПапка { get; set; } 
+    public int NowElement { get; set; } 
     public List<United> LUnited { get; set; }
 }

@@ -10,29 +10,40 @@
 
                 @foreach (var item in Model.LUnited)
                 {
-                    //Console.WriteLine("отладка Seed=:"+Model.Seed);
+                Console.WriteLine("отладка: родитель=:"+item.LinksFromUnited.parentId+", дитя"+item.LinksFromUnited.childId);
         
-                        @if (item.ObjFromUnited.id == Model.Seed)
+                        @if ( Model.Seed == item.LinksFromUnited.parentId ) //если родительская ветвь корень в этой рекурсии то вызовем сдедующую рекурсию 
+                                                                                            //для ветви ребенка и нарисуем ветвь родителя
                         {
-                             @if (Model.КодТекущаяПапка == null || Model.КодТекущаяПапка != item.ObjFromUnited.id)
+                             @if (Model.NowElement == null || Model.NowElement != item.LinksFromUnited.childId) 
                              {
-                                Model.КодТекущаяПапка = item.ObjFromUnited.id;
+                                Model.NowElement = item.LinksFromUnited.childId;
 
                                 WebApplicationMVC.Models.ListUnited inner = new WebApplicationMVC.Models.ListUnited
                                     {
-                                        Seed = item.ObjFromUnited.id,
+                                        Seed = item.LinksFromUnited.childId,
                                         LUnited = Model.LUnited
                                     };
 
                                 <li>
-                                <span  parent-id="@item.ObjFromUnited.id">
-                                    <a href="#"  onclick="expand(this)">@item.ObjFromUnited.type</a>
+                                <span  parent-id="@item.LinksFromUnited.childId">
+                                    <a href="#"  onclick="expand(this)">@item.ObjFromUnited.product</a>
                                 </span>
-                                @*Html.Partial("FolderFile3", inner)*@
-                                @await Html.PartialAsync("FolderFileTree", inner)
+                                @await Html.PartialAsync("Tree", inner)
                                 </li>
                             }
                         }
+                        //@if (Model.Seed == item.LinksFromUnited.childId)//если ветвь ребенка то выводим по нему инфу в эту ветвь сразу, то есть файл в случае задания папки-файлы
+                                                                          //в случае с дерево ссылок-объекты это не надо т.к. нет разделения
+                        //    @if (item.ObjFromUnited.id != -1)
+                        //    {
+                        //        <li>
+                        //            <a href="/home/FileContent?id=@item.ObjFromUnited.type">
+                        //                @*await Html.PartialAsync("Icone", item.ФайлИзОбъединенной.КодТипаФайла)*@ @*не получилось вывести иконку*@
+                        //                @item.ObjFromUnited.type
+                        //            </a>
+                        //        </li>
+                        //    }
                 }
 
         </ul>
@@ -49,4 +60,6 @@
     }
 
   </script>
+
+
 

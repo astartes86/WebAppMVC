@@ -49,9 +49,9 @@
 <form method="post">
     <div class="col-md-2">
     <p>
-            <label asp-for="AttrFromUnited.objectId"class="control-label">Номер файла в базе:</label><br />
-            <input type="number" asp-for="AttrFromUnited.objectId" class="form-control"/>
-            <span asp-validation-for="AttrFromUnited.objectId" class="text-danger"></span>
+            <label asp-for="AttrFromUnited.id"class="control-label">Номер файла в базе:</label><br />
+            <input type="number" asp-for="AttrFromUnited.id" class="form-control"/>
+            <span asp-validation-for="AttrFromUnited.id" class="text-danger"></span>
     </p>
     <p>
         <input type="submit" value="Получить" class="btn btn-primary"/>
@@ -65,8 +65,8 @@
         <input type="text" asp-for="AttrFromUnited.name" />
     </p>
     <p>
-        <label asp-for="AttrFromUnited.objectId">Код файла</label><br />
-        <input type="text" asp-for="AttrFromUnited.objectId" />
+        <label asp-for="AttrFromUnited.id">Код файла</label><br />
+        <input type="text" asp-for="AttrFromUnited.id" />
     </p>
     <p>
         <label asp-for="AttrFromUnited.value">Описание файла</label><br />

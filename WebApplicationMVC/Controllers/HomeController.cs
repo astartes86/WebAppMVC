@@ -28,16 +28,26 @@ namespace WebApplicationMVC.Controllers
             // добавляем начальные данные при их отсутствии
             if (!db.Obj.Any())
             {
-                Objects o1 = new() {  type = "Деталь", product = "СЕ.1235.01.00.001" } ;
-                Objects o2 = new () {  type = "Материал по КД", product = "СЕ.1235.01.00.001" };
-                Objects o3 = new() {  type = "Документ", product = "СЕ.1235.01.00.001" };
+                Objects o1 = new() { type = "Деталь", product = "СЕ.1235.01.00.001" } ;
+                Objects o2 = new () { type = "Материал по КД", product = "Сталь 09Г2С" };
+                Objects o3 = new() { type = "Документ1", product = "СЕ.1235.01.01.000 ВП" };
+                Objects o4 = new() { type = "Документ2", product = "СЕ.1235.01.01.000 ВВ" };
+                Objects o5 = new() { type = "Документ3", product = "СЕ.1235.01.01.000 ВР" };
+                Objects o6 = new() { type = "Документ4", product = "СЕ.1235.01.01.000 ВЖ" };
+                Objects o7 = new() { type = "Документ5", product = "СЕ.1235.01.01.000 ВК" };
 
                 Models.Attributes f1 = new() {  name = "Наименование", value = "Фланец"};
                 Models.Attributes f2 = new() {  name = "Раздел спецификации", value = "Сборочные единицы" };
                 Models.Attributes f3 = new() { name = "Марка материала", value = "Сталь 09Г2С" };
 
-                db.Obj.AddRange(o1, o2, o3);
+                Models.Links l1 = new() { parentId = 3, childId = 4 };
+                Models.Links l2 = new() { parentId = 4, childId = 5 };
+                Models.Links l3 = new() { parentId = 4, childId = 6 };
+
+
+                db.Obj.AddRange(o1, o2, o3, o4, o5, o6, o7);
                 db.Attr.AddRange(f1, f2, f3);
+                db.Links.AddRange(l1, l2, l3);
                 db.SaveChanges();
             }
         }
@@ -49,38 +59,42 @@ namespace WebApplicationMVC.Controllers
             List<United> combinedTables = new List<United>();
             var connection = new SqlConnection(_configuration["ConnectionStrings:DefaultConnection"]);
             connection.Open();
-            var command = new SqlCommand("SELECT  Obj.id, Obj.childId, Obj.product, " +
-                                                            "Attr.name, Attr.objectId, Attr.value, Links.childId, Links.icone " +
-                                                            "FROM Obj LEFT JOIN Attr ON Obj.id = Attr.id " +
-                                                                       "LEFT JOIN Links ON Attr.parentId = Links.parentId " +
-                                                            "ORDER BY Obj.childId, Obj.codeFolder, Attr.name, Attr.objectId", connection);
-                var reader = command.ExecuteReader();
-                        while (reader.Read())
+            //var command = new SqlCommand("SELECT  Obj.id, Obj.type, Obj.product, " +
+            //                                                " Links.parentId, Links.childId  " +
+            //                                                "FROM Obj LEFT JOIN Links ON Obj.id = Links.parentId " +
+            //
+            //                                                "ORDER BY Links.parentId desc", connection);
+            var command = new SqlCommand("SELECT  Links.parentId, Links.childId, Obj.id, Obj.type, Obj.product " +
+                                            "FROM Links LEFT JOIN Obj ON Obj.id = Links.parentId ", connection);
+
+
+            var reader = command.ExecuteReader();
+            bool b=false;
+            int root=0;
+            while (reader.Read())
                         {
                             Objects table1 = new Objects
                             {
-                                id = reader.GetInt32(0),
-                                type = reader.GetString(1),
-                                product = reader.GetString(2),
+                                id = reader.IsDBNull(2) ? -1 : reader.GetInt32(2),
+                                type = reader.IsDBNull(4) ? "" : reader.GetString(3),
+                                product = reader.IsDBNull(4) ? "" : reader.GetString(4),
                                 // Set other properties
                             };
-                //при добавлении папки которая не содержит файл
-                Models.Attributes table2 = new()
-                            {
-                                name = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                                objectId = reader.IsDBNull(4) ? -1 : reader.GetInt32(4),
-                                value= reader.IsDBNull(5) ? "" : reader.GetString(5),
-                                // Set other properties
-                            };
+                            
                             Links table3 = new()
                             {
-                                parentId = reader.IsDBNull(6) ? -1 : reader.GetInt32(6),
-                                childId = reader.IsDBNull(7) ? -1 : reader.GetInt32(7),
+                                //id = reader.IsDBNull(6) ? -1 : reader.GetInt32(6),
+                                parentId = reader.IsDBNull(0) ? -1 : reader.GetInt32(0),
+                                childId = reader.IsDBNull(1) ? -1 : reader.GetInt32(1),
+                                
                                 // Set other properties
                             };
-                combinedTables.Add(new United { ObjFromUnited = table1, AttrFromUnited = table2, LinksFromUnited = table3 });
-                        }
-            ListUnited model = new() { LUnited = combinedTables };
+
+                            if (b==false) { root = (int)table3.parentId; b = true; }
+
+                combinedTables.Add(new United { ObjFromUnited = table1, /*AttrFromUnited = table2,*/ LinksFromUnited = table3 });
+            }
+            ListUnited model = new() { LUnited = combinedTables, Seed = root };
             
             return View(model);//для вывода в виде дерева
         }
@@ -95,7 +109,7 @@ namespace WebApplicationMVC.Controllers
         //--------------------------------------------------------------------------------------------------
         public async Task<IActionResult> AttrContent(int id)
         {
-            return View(await db.Attr.Where(s => s.objectId == id).ToListAsync());
+            return View(await db.Attr.Where(s => s.id == id).ToListAsync());
         }
         //--------------------------------------------------------------------------------------------------
 
@@ -153,7 +167,7 @@ namespace WebApplicationMVC.Controllers
             if (entity.ObjFromUnited != null)
                 { entity.ObjFromUnited = await db.Obj.FirstOrDefaultAsync(p => p.id == entity.ObjFromUnited.id); }
             if (entity.AttrFromUnited != null)
-                { entity.AttrFromUnited = await db.Attr.FirstOrDefaultAsync(p => p.objectId == entity.AttrFromUnited.objectId);}
+                { entity.AttrFromUnited = await db.Attr.FirstOrDefaultAsync(p => p.id == entity.AttrFromUnited.id);}
             return View(entity);
         }
         //--------------------------------------------------------------------------------------------------
@@ -163,7 +177,7 @@ namespace WebApplicationMVC.Controllers
             {
                 United ent = new()
                 { ObjFromUnited = await db.Obj.FirstOrDefaultAsync(p => p.id == id),
-                  AttrFromUnited = await db.Attr.FirstOrDefaultAsync(p => p.objectId == id) };
+                  AttrFromUnited = await db.Attr.FirstOrDefaultAsync(p => p.id == id) };
                 if (ent.ObjFromUnited != null) return View(ent);
                 if (ent.AttrFromUnited != null) return View(ent);
             }
@@ -194,7 +208,7 @@ namespace WebApplicationMVC.Controllers
         [HttpPost]
                 public async Task<IActionResult> DeleteFile(Models.Attributes файл)
                 {
-                    if (файл.objectId!= null)
+                    if (файл.id!= null)
                     {
                         db.Entry(файл).State = EntityState.Deleted;
                         await db.SaveChangesAsync();
